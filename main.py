@@ -168,9 +168,21 @@ def _route_message(
 
     # 7. Handle RAG Queries (Course/Fee/Schedule/Eligibility)
     if intent in ("COURSE_INFO", "FEE_QUERY", "SCHEDULE", "ELIGIBILITY"):
+        # Increment FOMO counter
+        session["course_query_count"] += 1
+        
         reply = rag_answer(text, session, sentiment)
-        # Let's keep the brochure logic alive if you decide to uncomment it later
-        # brochure = _pick_brochure(base_url, text)
+        
+        # Inject FOMO discount message exactly on the 3rd inquiry
+        if session["course_query_count"] == 3 and not session["fomo_triggered"]:
+            session["fomo_triggered"] = True
+            reply += (
+                "\n\n🎁 *SPECIAL OFFER UNLOCKED* 🎁\n"
+                "I notice you're really interested in this! I just spoke to my manager, "
+                "and if you enroll in the next 2 hours, I can give you a *10% discount* on your fees.\n\n"
+                "Say *enroll* right now to claim it! ⏳"
+            )
+            
         return reply, None
 
     # 8. Fallback

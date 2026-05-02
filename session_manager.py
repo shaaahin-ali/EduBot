@@ -33,6 +33,8 @@ def _fresh() -> dict[str, Any]:
         "sentiment_history": [],    # last 5 sentiment labels
         "objection_count": 0,
         "question_count": 0,
+        "course_query_count": 0,    # Tracks how many times they asked about a course
+        "fomo_triggered": False,    # Ensures we only offer the discount once
         "escalate": False,
         "started_at": datetime.now(timezone.utc).isoformat(),
     }
