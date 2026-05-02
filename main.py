@@ -24,6 +24,7 @@ from rag_engine import init_rag, answer as rag_answer
 from lead_manager import start_enrollment, handle_enrollment_step
 from objection_handler import handle_objection
 from analytics import compute_metrics
+from audio_handler import transcribe_audio
 
 # Optional scheduler
 try:
@@ -180,18 +181,41 @@ def _route_message(
 @app.post("/inbound", response_class=PlainTextResponse)
 async def inbound(
     request: Request,
-    Body: str = Form(...),
+    Body: str = Form(default=""),
     From: str = Form(...),
     To: str = Form(default=""),
+    NumMedia: int = Form(default=0),
     db: DBSession = Depends(get_db),
 ):
-    """Twilio WhatsApp webhook — receives messages, returns TwiML."""
+    """Twilio WhatsApp webhook — receives messages (text or audio), returns TwiML."""
+    text_to_process = Body
+
+    # ── Voice Note Handling ──
+    if NumMedia > 0:
+        form_data = await request.form()
+        media_url = form_data.get("MediaUrl0")
+        content_type = form_data.get("MediaContentType0", "")
+        
+        if media_url and "audio" in content_type:
+            print(f"[main] Voice note received from {From}, transcribing...")
+            transcribed_text = transcribe_audio(media_url)
+            if transcribed_text:
+                text_to_process = transcribed_text
+                print(f"[main] Transcribed text: {text_to_process}")
+
+    if not text_to_process.strip():
+        # Fallback if transcription failed and no text was sent
+        reply = "Sorry, I couldn't understand that voice note. Could you try typing it? 🎙️"
+        return PlainTextResponse(
+            content=_build_twiml(reply, None),
+            media_type="application/xml",
+        )
+
     # Build base URL dynamically from the incoming request
-    # (works correctly through ngrok)
     base_url = str(request.base_url)
 
     reply, media_url = _route_message(
-        wa_number=From, text=Body, db=db, base_url=base_url
+        wa_number=From, text=text_to_process, db=db, base_url=base_url
     )
     return PlainTextResponse(
         content=_build_twiml(reply, media_url),

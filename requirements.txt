@@ -9,3 +9,4 @@ numpy
 twilio
 apscheduler
 python-multipart
+requests
