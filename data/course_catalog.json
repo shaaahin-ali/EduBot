@@ -1,0 +1,50 @@
+[
+  {
+    "name": "JEE Advanced Crash Course",
+    "target": "Class 12 students aiming for IIT",
+    "duration": "6 months",
+    "fee": "₹28,000",
+    "schedule": "Mon/Wed/Fri 6:00–8:00 PM",
+    "highlights": "Recorded lectures, weekly doubt sessions, 15 full-length mock tests, personal mentor"
+  },
+  {
+    "name": "JEE Foundation Program",
+    "target": "Class 9–10 students",
+    "duration": "1 year",
+    "fee": "₹18,000/year",
+    "schedule": "Tue/Thu/Sat 4:00–6:00 PM",
+    "highlights": "Conceptual clarity focus, bi-weekly quizzes, parent progress reports, NCERT-aligned"
+  },
+  {
+    "name": "NEET Biology Intensive",
+    "target": "Class 11–12 students preparing for NEET",
+    "duration": "8 months",
+    "fee": "₹24,000",
+    "schedule": "Mon/Wed/Fri 4:00–6:00 PM",
+    "highlights": "NCERT + advanced bio, specimen-based learning, 20 mock tests, doubt clearing on weekends"
+  },
+  {
+    "name": "NEET Full Package (PCB)",
+    "target": "Class 12 students and droppers",
+    "duration": "1 year",
+    "fee": "₹42,000",
+    "schedule": "Mon–Sat 9:00 AM–1:00 PM",
+    "highlights": "Physics + Chemistry + Biology, daily tests, rank predictor, dedicated study room access"
+  },
+  {
+    "name": "Spoken English & Communication Skills",
+    "target": "College students and working professionals",
+    "duration": "3 months",
+    "fee": "₹8,000",
+    "schedule": "Sat/Sun 10:00 AM–12:00 PM",
+    "highlights": "Group discussions, mock interviews, pronunciation lab, certificate on completion"
+  },
+  {
+    "name": "Python & Data Science Bootcamp",
+    "target": "Engineering students and career switchers",
+    "duration": "4 months",
+    "fee": "₹15,000",
+    "schedule": "Sat/Sun 2:00–5:00 PM",
+    "highlights": "Hands-on projects, NumPy/Pandas/Matplotlib, intro to ML, capstone project with mentorship"
+  }
+]
